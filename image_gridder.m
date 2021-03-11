@@ -153,7 +153,8 @@ plot(y_centre,max_intensity_y,'go','linewidth',8);
 plot(axes_conv2,x_centre,y_centre,'go','linewidth',8);
 xlabel('pixels')
 ylabel('integrated pixel values')
-
+title('column-wise and row-wise integration (trimmed image)')
+legend
 
 % not trimmed plot
 subplot(122)
@@ -163,7 +164,7 @@ plot(y_coordinate,'k','linewidth',4,'DisplayName','y_{coordinate}');
 
 xlabel('Raw / Columns')
 ylabel('integrated counts values')
-title('column-wise and row-wise integration')
+title('column-wise and row-wise integration (not trimmed)')
 legend
 
 
