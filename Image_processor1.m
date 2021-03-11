@@ -1,7 +1,8 @@
-% This script is intended to retrive flux information from the photn
+% This script is intended to retrive flux information from the photon
 % counter device MAMA which is used by STIS in order to obtain images of
 % the planet Neptune. The script retrives the images from a specific 
-% fits file where of the '_flt' extension (flat filed science). Since the
+% fits file where of the '_flt' extension (flat filed science). The images 
+%                                                            
 % given observations are in counts (number of photons hitting the sensor)
 % we would like to be able to convert this count in flux units (Jensky) or
 % in Reyleight.

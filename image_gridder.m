@@ -1,6 +1,12 @@
 %% Image Gridder
-% This script is supposed to create a grid of 3x3 pixel submatrices inside
-% a big matirx.
+%  –––––––––––––
+%-------------------------------------------------------------------------%
+% The script is able to identify the position of the planet Neptune inside
+% the images retrived from the HST observational campaign of Neptune.
+% The script derives the position of the center of the planet in terms of
+% bits and encirle the planet inside a circle which resembles the correct
+% circular shape of the planet.
+%-------------------------------------------------------------------------%
 close all
 clc
 clf
@@ -12,67 +18,55 @@ files1 = dir('filters');             % add Images Path
 files2 = dir('HST');                 % add Images Path
 
 % withdraw images from the files
-files_name = {files1(3:end).name};                                       % The first name is the Strontium fluoride             
-addpath(files1(1).folder);                                             % the second is the clear MAMA sensor    
-addpath(files2(1).folder);                                             % the second is the clear MAMA sensor    
+files_name = {files1(3:end).name};                               % The first name is the Strontium fluoride             
+addpath(files1(1).folder);                                       % the second is the clear MAMA sensor    
+addpath(files2(1).folder);                                       % the second is the clear MAMA sensor    
 
-%       %%%% INSERT THE IMAGE HERE %%%%
-%       –––––––––––––––––––––––––––––––
-image_neptune=fitsread('odq408rcq_flt.fits','image',1);                % image darectly from neptune gallery
+%     INSERT THE IMAGE HERE 
+% –––––––––––––––––––––––––––––––
+image_neptune=fitsread('odq408rcq_flt.fits','image',1);          % image darectly from neptune gallery
+                                                                 % images  are contained inside HST folder
+                                                                 % and you can decide which file to upload                                                                % 
+% Graphics definition
 
-%% Gridding Parameters  (Big Image)
-% Create an image so that it can be convoluted properly
-
-mean_value     =  mean(mean(image_neptune));      % mean value through out the whole image
-hot_spots      =  image_neptune>mean_value*15;    % hot spots in the image
-filtered_image =  image_neptune;
-filtered_image(~hot_spots) =   NaN;               % Eliminates the points lower then the mean value
-
-%% Plotting The filtered and not filtered image
-
-real_image      = figure('Position',[0 0 1200 400]);
-
-real_image_sub1      = subplot(121);hold on
+real_image           = figure('Position',[0 0 600 400]);
+real_image_sub1      = axes(real_image);hold on
 real_image_sub1.XLim = [0 1024];
 real_image_sub1.YLim = [0 1024];
 
-real_grid1      = imagesc(image_neptune);
+real_grid1           = imagesc(image_neptune);
 xlabel('pixel')
 ylabel('pixel')
 title('pure image')
 
-real_image_sub2      = subplot(122),hold on;
-real_image_sub2.XLim = [0 1024];
-real_image_sub2.YLim = [0 1024];
-
-real_grid2      = imagesc(filtered_image*100000);                            % image 
-xlabel('pixel')
-ylabel('pixel')
-title('Mean value filtering')
-
 
 %% Convolution Phase
  
-
 % Kernel definition
-kernel        =  fspecial('disk',2.5);   % standard square convolution matrix 5x5
-mask          =  kernel~=0;              % other matrices can be used in the convolution
-kernel(mask)  =  2;                      % possible modifications to the square matrix
-                                         % (in my case every non-zero term
-                                         % in 1)
+
+kernel        =  fspecial('disk',2.5);   % disk convolutional kernel (5x5)
+mask          =  kernel~=0;              % find all the point that are non-zero
+kernel(mask)  =  2;                      % put the convlutional matrix with all points at value 2
+                                         % this is a guess value
+
+% standard square convolution matrix 5x5
+% other matrices can be used in the convolution
+% possible modifications to the square matrix
+% (in my case every non-zero term
+% in 1)
 
 
-convoluted_neptune      = conv2(image_neptune,kernel);
-convoluted_neptune      = convoluted_neptune(length(kernel):end,length(kernel):end);     
-Mean_value_convolution  = mean(mean(convoluted_neptune));
-Variance                = mean(mean((convoluted_neptune-Mean_value_convolution).^2));
-Standard                = sqrt(Variance);
+convoluted_neptune      = conv2(image_neptune,kernel);                                 % obtained convlution
+convoluted_neptune      = convoluted_neptune(length(kernel):end,length(kernel):end);   % eliminate the edge raws and columns coming from covolution
+Mean_value_convolution  = mean(mean(convoluted_neptune));                              % find the mean value in the convoluted image
+Variance                = mean(mean((convoluted_neptune-Mean_value_convolution).^2));  % find the VAriance in the convoluted image
+Standard                = sqrt(Variance);                                              % find the standard deviation
 
 % I make a first order assumption on the possible way to eliminate the
 % noise from the figure. I take the mean and I add the standard deviation
-% as maximum trash hold of the noise 
+% as maximum trash hold of the noise. This eliminates the most of the noise
 
-convoluted_neptune(convoluted_neptune<(mean(mean(convoluted_neptune))+Standard))=0;
+convoluted_neptune(convoluted_neptune<(mean(mean(convoluted_neptune))+Standard))=0; 
 
 % trim of the edges that are the part of the 
 % convolution in which the mask is not completely 
@@ -84,11 +78,10 @@ convoluted_neptune(convoluted_neptune<(mean(mean(convoluted_neptune))+Standard))
 % be equal to the orginal image after the reduction
 
 % figure definition
+
 conv_image = figure('Position',[0 200 1200 500]);  
-
-axes_conv1=subplot(121);hold on,legend()
-
-axes_conv2=subplot(122);hold on
+axes_conv1 = subplot(121);hold on,legend()
+axes_conv2 = subplot(122);hold on
 
 imagesc(axes_conv2,convoluted_neptune)
 xlim([0 1024])
@@ -108,6 +101,7 @@ colorbar;
 
 
 % Integration along the rows and the columns
+
 x_coordinate=sum(convoluted_neptune);    % sum along the x-axis
 y_coordinate=sum(convoluted_neptune,2);  % sum along the y-axis
 
@@ -123,8 +117,7 @@ trimmed_y=y_coordinate;
 trimmed_y(mask)=0;
 trimmed_x(mask)=0;
 
-% This passage is only for smoothen the data but I don't still know
-% if it is correct or incorrect
+% This passage is only for smoothen the data 
 smoothing_factor=80;                                 % interesting to check how the smoothing 
                                                      % factor is able to impact the 
                                                      % centre location
@@ -234,7 +227,29 @@ legend
    axes_conv1.XGrid          = 'on';
    axes_conv1.YGrid          = 'on';
    axes_conv1.XLabel.String  = {'radious'};
-   axes_conv1.YLabel.String  = {'pixel count summation inside the disk'};
+   axes_conv1.YLabel.String  = {'one step difference'};
+   axes_conv1.Title.String  = {'Disk sum difference'};
+   
+   %% The Algorith logic
+   
+   % Now that the center of the planet is found we must find the radious of
+   % the planet. In order to do that a cicular naular kernel is created
+   % with ever increasing radious. What the programm does is multipling the
+   % circular anulus kernel times the counts on the portion of the image
+   % that is covered by the circular anulus kernel. The circular kernel is
+   % centered at the center position of the planet. The process is repeated
+   % for verious radii. The correct radious of the planet is found when the
+   % difference between the convlution at one step minus the value of the
+   % convoulution at the previous step is maximum in absolute value. 
+   % The logic is the following : when I am inside the planet, the
+   % convolution will give almost the same result if the variation of the
+   % circular kernel dimesion is reasonably small. The significant
+   % difference wiill be at the moment the circular kernel is aoutside the
+   % planet and the number of counts get close to zero, while the
+   % preceeding convlution was still inside the planet.
+   
+   
+   
    
    for i=1:length(rad)
        
@@ -242,29 +257,26 @@ legend
        
        % 1.5 2.5 3.5  are all radious of the filter
        % so the matrix is 3x3 5x5 7x7
+
+       disk_filter=circular_kernel(rad(i),rad(i)-2,'rim',200,'stuff',-400); % the circular kernel is weighted so to reduce it to a sort of Wavelet function
+       l                  = floor(rad(i));            % this term serves to center the portion of the image which will be convoluted 
+       Area               = pi*rad(i)^2;              % area inside the anlus
+       mean_disk_value(i) = sum(sum(convoluted_neptune(x_centre-l:x_centre+l,y_centre-l:y_centre+l)...
+           .* disk_filter));
        
-              %disk_filter=fspecial('disk',rad(i));
-              %disk_filter(disk_filter~=0)=1;
-              disk_filter=circular_kernel(rad(i),rad(i)-2,'rim',200,'stuff',-400);
-             
-              l=floor(rad(i));            % this term serves to center 
-              Area=pi*rad(i)^2;
-              mean_disk_value(i) = sum(sum(convoluted_neptune(x_centre-l:x_centre+l,y_centre-l:y_centre+l)...
-                  .* disk_filter));
+       % Figure updating on the convolution image
+   
        
-              % Figure updating on the convolution image
+       if i>2
+           differential_count.YData=abs(diff(mean_disk_value(1:i)));
+           differential_count.XData=rad(1:i-1);                  %minus one because diff reduces the size of the vector
+           axes_conv1.YLim=[-1,max(differential_count.YData)*1.10];
+       end
+       %grafical objects
+       rectangle.Position=[x_centre-l y_centre-l 2*rad(i) 2*rad(i)];
+       rectangle.LineWidth=3;
+       pause(0.05)
        
-%               disk_move.XData=rad(1:i);
-%               disk_move.YData=mean_disk_value(1:i);
-              if i>2
-                  differential_count.YData=abs(diff(mean_disk_value(1:i)));
-                  differential_count.XData=rad(1:i-1);                  %minus one because diff reduces the size of the vector
-                  axes_conv1.YLim=[-1,1+max(differential_count.YData)];
-              end
-              rectangle.Position=[x_centre-l y_centre-l 2*rad(i) 2*rad(i)];
-              rectangle.LineWidth=3;
-              
-              pause(0.05)
        % once you fix the radious of the filter the matrix is of odd dimesions
        % we need to deine the number of elemnts that are at the left and right
        % of the center pixel in this matrix. This is the length of the matrix
@@ -276,7 +288,6 @@ legend
 [~,max_radious_index]=max(abs(diff(mean_disk_value)));                      % find the correct radious now
 circle=viscircles(axes_conv2,[x_centre,y_centre],rad(max_radious_index));   % plot a circle in the convoluted neptune image
 plot(real_image_sub1,x_centre,y_centre,'or','linewidth',10)                 % draw center in the image
-plot(real_image_sub2,x_centre,y_centre,'or','linewidth',10)                 % draw the center in the image
 x_centre
 y_centre
 rad(max_radious_index)

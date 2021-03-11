@@ -26,23 +26,31 @@ clear all
 close all
 
 %% Target Images from the folder
-target_folder=fullfile('.','HST');                     % target directory 
-dir_list=dir([target_folder,'/','*odq*']);             % Find all files with the start name 'odq'
+
+dir_list=dir(fullfile(pwd,'HST'));              % Find all files with the start name 'odq'
 target_dir=fullfile({dir_list.folder},{dir_list.name}); % The target files are insife dir_list in a structure.
-                                                       % note that each FITS file has the same name of the                                                       
-                                                       % directory in which it is contained apart form teh estension                                                    % Using {} puts each field of the structure in a cell-arry
-Observation_name={dir_list.name};                      % The target names of the folder
+                                                        % note that each FITS file has the same name of the                                                       
+                                                        % directory in which it is contained apart form teh estension                                                    % Using {} puts each field of the structure in a cell-arry
+Observation_name={dir_list.name}; 
+mask= ~strncmp(Observation_name,'.',1);                  % eliminates the first two useless files '..' ans '.' 
+Observation_name=Observation_name(mask);
+target_dir=target_dir(mask);% The targetnames of the folder
 %% Open the images
-for i=1:length(target_dir)
+
+for i=1:length(Observation_name)
     [info{i},set_DATA{i}]=fitsreader(target_dir{i},Observation_name{i});
 end
 
-%% IMPORTant Manoeuvre to Refind the Throughput Info from the _apt file
+%% IMPORTANT Manoeuvre to Refind the Throughput Info from the _apt file
 
-cd referencefiles  
-dir_int=dir('*_apt*.fits');
-cd ..
-path_useful=fullfile(dir_int(1).folder,dir_int(1).name);
+folderpath=(fullfile(pwd,'referencefiles'));
+dir_int=dir(folderpath);
+names={dir_int.name};
+index=find(contains(names,'_apt'));
+
+
+%%
+path_useful=fullfile(dir_int(index).folder,dir_int(index).name);
 throughput_info=fitsinfo(path_useful);
 
 fileID=fopen('Throughputs.txt','w');

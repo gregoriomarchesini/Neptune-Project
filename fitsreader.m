@@ -1,21 +1,20 @@
 
 
-function [FITSINFO,FITSDATASET]=fitsreader(DATADIR,OBSERVATION,varargin)
+function [FITSINFO,FITSDATASET]=fitsreader(FITSDIR,name,varargin)
 
 %% FUNCTION fitsReading
 %  version/date : version 01, 131203
 %  author(s)    : Fabrizio-M. Musacchio, IGM Cologne
 %                 (musacchio@geo.uni-koeln.de.de)
-
-%   modified by Lorenz Roth (lorenzr@kth.se)
+%  modified by Lorenz Roth (lorenzr@kth.se)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Update : This version was last edited by Gregorio Marchesini (gremar@kth.se)
 % Date   : 02/2021
 
 %% DESCRIPTION
 %
-%  INPUT:   DATADIR         directory of the observation
-%           OBSERVATION     Name fits-file.
+%  INPUT:   FITSDIR         directory of the observation
+%           name     Name fits-file.
 %  
 %  NOTES : the path must be correctly inserted in the function. The
 %          observation can be called by name. No extension is needed
@@ -52,32 +51,24 @@ addParameter(p,'plots_in','no',@(x)mustBeMember(x,printer)); %parameter plots_in
 a=parse(p,varargin{:});
 
 
-
-
-%% Main Function
-FITSFILE    = [OBSERVATION '_flt' '.fits']; % reserch the file name 
-FITSDIR     = fullfile(DATADIR,FITSFILE) ;
-
 % Read FITS-file:
 
 FITSINFO     = fitsinfo(FITSDIR);
-photfalm=FITSINFO.PrimaryData.Keywords{41,2};
-
-
 FITSDATASET.RAWCOUNTS    = fitsread(FITSDIR,'image',1);
 
 % Read specific parameters from header information
-fprintf('Dataset Description : %s\n',OBSERVATION)
+fprintf('Dataset Description : %s \n',name)
 disp('--------------------------------------------------------')
 fprintf('Total exposure time : %s \n',s2h(FITSINFO.PrimaryData.Keywords{41,2}));         % Exposure time [s]
 %fprintf('%s\n',FITSINFO.PrimaryData.Keywords{37,2});                                    % date start exposure
 fprintf('Starting date of the observation : %s\n',FITSINFO.PrimaryData.Keywords{38,2});  % time start exposure
-fprintf('Filter Used : %s\n\n\n',FITSINFO.PrimaryData.Keywords{75,2});                   % Filter used in the observation
+fprintf('Filter Used : %s\n',FITSINFO.PrimaryData.Keywords{75,2});                   % Filter used in the observation
+fprintf('Sensor Sensitivity : %s\n',FITSINFO.PrimaryData.Keywords{41,2});
 disp('--------------------------------------------------------')
-
+fprintf('\n\n\n\n')
 
 %% Flux Units Conversion  (pag 174 HST DATA HandBOOK version 2019)
-photflam=FITSINFO.PrimaryData.Keywords{100,2}     %[erg cm^-2 sec^-1 Å^-1] sensitivity of the sensor
+photflam=FITSINFO.PrimaryData.Keywords{100,2};    %[erg cm^-2 sec^-1 Å^-1] sensitivity of the sensor
 exposure_time=FITSINFO.PrimaryData.Keywords{41,2}; %[s] total exposure time
 flux_conv=photflam/exposure_time;
 
