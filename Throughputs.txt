@@ -1,0 +1,490 @@
+ Fits standard                                  
+ Bits per pixel                                 
+ Number of axes                                 
+ File may contain extensions                    
+ FITS file originator       
+
+ number of extensions in file                   
+ name of file                                   
+
+
+
+
+
+
+
+
+
+Reference file updated by C. Proffitt and S. T. Holland.                
+  aperture_apt.fits renamed to h1v1141oo_apt.fits on Jan 31 1997 11:41  
+  :: History for update of 8 of the large, filtered                     
+  :: aperture transmission entries.                                     
+  :: F25LYA,F25QTZ,F25CN182,F25CIII,F25MGII,F25SRF2,                    
+  :: F25CN270 and F25ND3                                                
+  :: 29Oct98                                                            
+
+  Filter transmission curves were measured on orbit by                  
+  dividing a spectrum of a standard observed through the                
+  filter by a spectrum of the standard observed through                 
+  a wide slit.                                                          
+
+  Corrections are needed to account for (1) light lost                  
+  outside the slit and (2) light lost outside the                       
+  extraction aperture.                                                  
+
+  (1) Light lost outside the slit:                                      
+   The filter transmission curve was multiplied by                      
+          the APT table for the slit.                                   
+
+  (2) Light lost outside the extraction box:                            
+   The G140L and G230L PCT tables for the 25MAMA                        
+          modes were concatenated together, as were the                 
+          tables for the 52X2 slit. The correction factor               
+          for the filter transmission curves is                         
+    pctcorr_fuvnuv = pct(25mama)/pct(52X2)                              
+
+
+  (A) F25CIII, F25CN182, F25CN270, F25LYA, F25MGII                      
+
+  These are all 25x25 arcsecond apertures. Wavelengths                  
+  were determined by linearly interpolating the offsets                 
+  from a pair of wavecals that bracketed the observations.              
+  The F25LYA, F25CIII, F25CN270, and F25CN182 trans-                    
+  missions were calculated by calibrating the spectra                   
+  with the 52X2 observation of GD153. The results were                  
+  then fit using a low order spline, and the APT and PCT                
+  corrections applied.                                                  
+
+  (B) F25QTZ, F25SRF2                                                   
+
+  These filters cover both MAMA bands. The observations                 
+  in each band were calibrated using the 52X2 observation               
+  of GD153. The resulting transmissions for each filter                 
+  were concatenated into one spectrum and then interpol-                
+  ated to a monotonic wavelength grid to ease spline                    
+  fitting. A low order spline was then fit to the concat-               
+  enated spectrum.                                                      
+
+  (C) F25ND3                                                            
+
+  For F25ND3, the same technique was used as in (B),                    
+  except the flux calibrated standard star BD+75D325,                   
+  CDBS' crrefer$calspec/bd_75d325_fos_003.tab, was used                 
+  to calibrate the transmissions.                                       
+
+  Data for the transmission vs. wavelength are from                     
+  calibration proposal 7096, observations made in summer                
+  1997.                                                                 
+
+     APERTURE            OBS. ROOTNAME       TARGET                     
+       NAME            G140L       G230L                                
+     ----------        -----       -----     ------                     
+     52X2            O3ZX08HHM   O3ZX08HLM   GD153                      
+     F25CIII            N/A      O3ZX08I7M   GD153                      
+     F25CN182           N/A      O3ZX08I5M   GD153                      
+     F25CN270           N/A      O3ZX08I9M   GD153                      
+     F25LYA          O3ZX08HTM      N/A      GD153                      
+     F25MGII            N/A      O3ZX08IBM   GD153                      
+     F25QTZ          O3ZX08HRM   O3ZX08I3M   GD153                      
+     F25SRF2         O3ZX08HPM   O3ZX08I1M   GD153                      
+     F25ND3          O3ZX05W5M   O3ZX06LQM   BD+75D325                  
+     F25ND5          O3ZX05WSM   O3ZX06NLM   BD+75D325                  
+
+  The _new_ throughput measurements were not made with                  
+  any effort to cover the redleak (and blueleak), out-of                
+  -nominal-passband, regions of the filters.  Therefore                 
+  those wavelength regions from the November, 1997,                     
+  generation of synphot throughput tables, as listed                    
+  below, were appended.  Except, the red end appended to                
+  F25ND3 has a factor of * 0.893 applied. This zero point               
+  correction being due to the CCD F25ND3 image mode                     
+  observations (7656, Nov97) showing OBSERVED-Synphot =                 
+  0.123 mag.                                                            
+
+  FILTER   Passband of new measurements     Red(blue)Leak               
+                                           appended from:               
+                                        crstiscomp$<>.tab               
+  F25CIII    1601-2500                  stis_f25ciii_003                
+  F25CN182   1601-3129                  stis_f25cn182_002               
+  F25CN270   2501-2950                  stis_f25cn270_003               
+  F25LYA     1140-1650                  stis_f25lya_002                 
+  F25MGII    2700-2900                  stis_f25mgii_003                
+  F25QTZ     1450-3130                  stis_f25qtz_002                 
+  F25SRF2    1261-3129                  stis_f25srf2_002                
+  F25ND3     1142-3129                  stis_f25nd3_001                 
+
+  The error arrays for the wavelength regions of the new                
+  measurements were set at 3%, given that that was the                  
+  ~mean error when using these throughputs to predict the               
+  result of observations of _other_ standard stars.                     
+  Those error arrays are found only in the Synphot                      
+  version of these throughput data.                                     
+
+  neworef_apt.fits renamed to ib51549co_apt.fits on Nov 5 1998          
+  ----------------------------------------------------------------------
+  Throughputs for the STIS F28X50LP filter.                             
+  -December 1998 update.                                                
+
+  To produce this table, a simple zeropoint shift. the existing table   
+  for f28x50lp has been multiplied by 0.766 using the                   
+  iraf.stsdas.synphot                                                   
+  command                                                               
+
+  calcband("0.766*band(stis,ccd,f28x50lp) / band(stis,ccd,50ccd)")      
+
+  (In fact, the input table was the synphot version of the previous oref
+  table where the synphot version resampled the original at 5A          
+  intervals.                                                            
+  The original table was a winter 1997 delivery to oref of ground       
+  measurements identified as 'TIM Model/Manufacture Filter Meas.')      
+
+  The factor of 0.766,  comes from on-orbit measurements of             
+  spectrophotometric standards.                                         
+
+  Data from proposals 7656 and 7674 were used.  The 7656 data were      
+  recalibrated using the best reference files.  The 7674 data are       
+  acquisition images and photometry was done using the raw files.       
+
+  The task apphot.phot was used for the photometry with 5 pixel radius  
+  aperture and where possible a larger aperture (59 pixel radius for the
+  7656 data but 29 for the 7674 data since it is only a 100x100         
+  sub-array). For the sky and background subtraction the annulus was    
+  from 60 to 100 pixels radius, except for the 7674 data where it was   
+  from radius 25 to 35 pixels for the 5 pixel radius measurements and   
+  from 30 to 40 for the 29 pixel radius photometry.                     
+
+  SYNPHOT [band(stis,ccd,f28x50lp)] was used to determine the expected  
+  counts.  The end results are summarized below.  The SYNPHOT pre-      
+  dictions summarized here and detailed at the bottom  were made using  
+  the f28x50lp throughput values prior to the zeropoint correction      
+  described here.                                                       
+
+                          MEAN                                          
+   Filter    No. stars  OBS-SYNPHOT   Notes                             
+                        (Gain=4.11)                                     
+   F28X50LP      26     0.290         Rms on mean = 0.0077              
+
+  This 0.29 mag is relative to the 59 pixel aperture, and corresponds   
+  to the factor of 0.766 mentioned above.                               
+
+  The data are listed below. The SYNPHOT predictions below assume a     
+  gain=4, and were adjusted to the on-orbit measured gain=4.11 when     
+  determining the mean for the table above.                             
+
+   Dataset    Name         5 pix    Err    59/29pix Err    SYNPHOT      
+  o4a507060  GD71         -10.033  0.006  -10.181  0.029  -10.491       
+  o49x01eoq  BD+28D4211   -12.462  0.006  -12.650  0.005  -12.951       
+  o49x02z3q  BD+28D4211   -12.460  0.006  -12.615  0.005  -12.951       
+  o49x05b3q  FEIGE34      -11.831  0.007  -12.070  0.007  -12.315       
+  o49x06dnq  FEIGE34      -11.849  0.007  -12.183  0.011  -12.315       
+  o49x07qaq  G191B2B      -11.217  0.006  -11.381  0.005  -11.739       
+  o49x08vcq  G191B2B      -11.244  0.006  -11.443  0.005  -11.739       
+  o49x09j9q  GD71         -10.026  0.006  -10.275  0.005  -10.496       
+  o49x10luq  GD71         -10.029  0.006  -10.353  0.005  -10.496       
+  o49x11udq  GRW+70D5824  -10.285  0.006  -10.251  0.008  -10.764       
+  o49x12c2q  GRW+70D5824  -10.311  0.006  -10.513  0.006  -10.764       
+  o49x15n1q  HZ21          -8.347  0.006   -8.440  0.006   -8.790       
+  o49x16tiq  HZ21          -8.339  0.006   -8.508  0.005   -8.790       
+  o49x17loq  HZ43A        -10.106  0.006  -10.324  0.006  -10.610       
+  o49x18e4q  HZ43A        -10.123  0.006  -10.430  0.005  -10.610       
+  o49x21qwq  HZ4           -8.640  0.006   -8.866  0.005   -9.094       
+  o49x22xnq  HZ4           -8.653  0.006   -8.883  0.008   -9.094       
+  o49x23ayq  P041C        -11.553  0.006  -11.712  0.006  -12.166       
+  o49x24koq  P041C        -11.615  0.006  -11.794  0.005  -12.166       
+  o49x25i0q  P177D        -10.192  0.006  -10.360  0.006  -10.739       
+  o49x26erq  P177D        -10.231  0.006  -10.443  0.006  -10.739       
+  o49x27lxq  P330E        -10.676  0.006  -10.833  0.006  -11.199       
+  ------------------------------------------------------------------    
+
+  --------------------------------------------------------------        
+  F28X50OII Update of December 1998                                     
+
+  This revision adds the out-of-nominal-band throughput                 
+  (red leak) and 0-valued endpoints.  The red leak was first            
+  added to the synphot version of this table in March/April 1997.       
+  That synphot table reported the red leak measurement as               
+  coming from a witness sample scanned by the manufacturer.             
+  The May, 1997, IDT report of the analysis of the red leak             
+  notes that the spike at 6000 angstroms has negligible                 
+  transmission. 'It can not be seen in the measured trans-              
+  missions sent by Ball; we found it using prelaunch images.            
+  It was barely seen in those spectra.'                                 
+  --------------------------------------------------------------        
+
+  ednew_apt.fits renamed to icb12027o_apt.fits on Dec 11 1998           
+
+  Jan 1999                                                              
+  Updates to slit throughputs for the slits without filters (converted  
+  to an infinite aperture).  The 0.2X0.05ND and 0.3X0.05ND apertures    
+  also have revised transmissions, as well as the 31X0.05NDA-C and      
+  F25NDQ1-4 filters.                                                    
+
+  The F28X50OIII filter has a sharp decrease in peak throughput (a      
+  factor of 2), although the total throughput is unchanged.  This       
+  is because the new transmissions (based on in-orbit data) include     
+  the star's PSF, while the previous (ground-based) measurement did not;
+  the PSF broadens the transmission.                                    
+
+  new_apt.fits renamed to j2b1313jo_apt.fits on Feb 11 1999             
+  -------------------------------------------------                     
+  June 1999 updates                                                     
+  .                                                                     
+  Revised F25SRF2 Throughput                                            
+  .                                                                     
+  This update changes this filter's throughput values to 0.94 for       
+  wavelengths >3125A, an ~15% increase.  The previous revision of       
+  this table used on-orbit G140L+G230L data that produced a similar     
+  change for wavelengths <3125A.                                        
+  .                                                                     
+  The current revision is due to G430L data, o4om01070 and o4om01010,   
+  from calibration proposal 7661.  One spectrum is through the SRF2     
+  filter, the other through the clear 50CCD aperture.  A linear fit     
+  to their ratio matches the previous G230L measure(0.94) in their      
+  2940-3125A overlap.  We assume this 0.94 level continues redward      
+  of the 5750A endpoint of this G430L data.                             
+  .                                                                     
+  Indications are this and the previous update do not represent a change
+  in the filter throughput.  George Hartig presented transmittance      
+  curves, in a Nov96 instrument review, which are consistent with these 
+  in-flight data.  Thus, the previous, pre-flight, SRF2 tables with     
+  throughput of ~0.8 from redward of ~1500A  were likely inaccurate.    
+  .                                                                     
+  .                                                                     
+  Revised F28X50OIII Througput                                          
+  .                                                                     
+  The Jan 99 update to this file for the F28X50OIII filter used         
+  in-flight data for the transmission which had the PSF convolved with  
+  the actual filter throughput.  The PSF should be removed via          
+  deconvolution.  The data are unsuitable quality for this, however.    
+  A PSF was constructed from observations of HR7615, observation set    
+  O49Q02010, proposal ID 7642, by block averaging 7 rows centered on    
+  the stellar image.  This was convolved with the vendor's transmission 
+  curve (as given in the Dec 1998 file, oref$icb12027o_apt.fits).       
+  Comparison of this to the in-flight curve reveals a nearly identical  
+  shape (peak, width, area the same) with a 0.28 pixel offset in        
+  wavelength.  The offset is plausibly attributable to target acq error.
+  The conclusion is that the vendor curve is an accurate representation 
+  of the in-flight filter throughput.  Therefore, the throughput as     
+  given in the December 1998 delivery was used to replace the values    
+  in the January 1999 version of this file, with one minor change:      
+  as in the January 1999 version, the red-leak section was extrapolated 
+  to 11999 A, and then zeroed out at 12000 A.                           
+  .                                                                     
+  .                                                                     
+  Revised F28X50OII Througput                                           
+  .                                                                     
+  This change re-installs the vendor-measured curve that was in         
+  the apt file prior to Feb 1999 (see F28X50OIII filter above for       
+  more details.                                                         
+  .                                                                     
+  .                                                                     
+  Extension of Throughputs from 10000A to 10330A                        
+  .                                                                     
+  For those apertures supported for use with the CCD, the correct       
+  end wavelength should be 10330A.  For all the 52" slits, the          
+  throughput at 10330A has been added by extrapolating from the         
+  last 2 points (8800 and 10000).                                       
+  .                                                                     
+  ===================================================================== 
+
+  25Jun99 F25ND5 THROUGHPUT REVISION                                    
+
+      THE CURRENT DELIVERY uses the UV measures (<3160A) from           
+      Cycle 7 CAL/STIS program 8069. The throughput for wavelengths     
+      >4000A are the synphot stis_f25nd5_001 table scaled by a          
+      factor of 0.79.                                                   
+
+      The HST standard stars that are bright enough to yield F25ND5     
+      spectra are too bright to observe in imaging mode.  Therefore     
+      in order to arrive at throughput vs wavelength in F25ND5 we       
+      bootstrap to the F25ND3 calibration.                              
+
+      Using the net counts from the G140L and G230L spectra of 8069     
+      we divide the F25ND5 spectra by the F25ND3.  The resulting        
+      G140L and G230L ratios are merged into one spectrum. That         
+      spectrum is fit(sigma clip of -2.5 +3.0) with a 7 segment         
+      cubic spline . This smooth curve is multiplied by the             
+      on-orbit measured F25ND3 throughput that was installed in         
+      stis_f25nd3_002.tab.  The result is the UV portion of the         
+      present delivery.                                                 
+
+      The optical and near IR end of the 001 ground measures            
+      were appended to the above derived UV, but scaled (*.79) so       
+      that the countrate predicted using the new curve (and synphot     
+      reference spectra listed below) matched the countrate found       
+      in aperture photometry of several on-orbit images taken           
+      through the F25ND5 filter.  The on-orbit data, also listed        
+      below, were measured with iraf.phot and a 5 pixel radius          
+      aperture.  The resulting countrates were corrected to             
+      'infinite' aperture values by using a factor of 1.2483.           
+      That factor was determined from the curve of growth of a          
+      deep f28x50lp image, o49q01020.                                   
+
+   Optical Band Measures :: Synphot Reference Spectra used in           
+  Predictions                                                           
+
+      o4g801020 CCD  8s Accum,HD61421 :: crrgid$bpgs/bpgs_92            
+
+      o4g801k7q CCD .1s Accum,HD61421 :: crrgid$bpgs/bpgs_92            
+
+      o5i301ouq CCD  2s Accum,HD128620:: crrgid$bpgs/bpgs_36,           
+                                         and also bz77/bz_24            
+
+  The resulting throughput is ~ND6.3 in the UV, ~ND5.5 in the optical,  
+  rising to ~ND4.6 at 10,000A.                                          
+
+
+  test_apt.fits renamed to j781536qo_apt.fits on Jul 8 1999             
+
+  Correction - Extension of Throughputs from 10000A to 10330A           
+
+  When the throughputs for the CCD apertures (52") were                 
+  previously updated, the number of elements in the array               
+  was mistakenly left unchanged.  These have now been                   
+  updated to reflect the additional element required to                 
+  get to 10330A.                                                        
+
+  new_apt.fits renamed to jba1538mo_apt.fits on Nov 10 1999             
+  History for F28X50LP update (June 2001)                               
+
+  Slitless spectroscopy was taken with both 50CCD and F28X50LP and the  
+  G430L and G750L gratings as part of program 7661.  The net counts for 
+  these spectra were extracted and combined and the count rate through  
+  the  F28X50LP filter were divided by the unfiltered countrates and    
+  then smoothed interactively in IDL to define the relative filter      
+  throughput as a function of wavelength.                               
+  Datasets  O40M01010  O40M01090  O4OM010D0  O4OM010G0                  
+
+  History for NDQ1 and NDQ4 updates.                                    
+
+  Prior on orbit throughput measures were based solely on slitless      
+  spectroscopy. The large offset along the dispersion direction of      
+  these filters means that wavelengths < 1330 Angstroms fell off the    
+  detector when the spectra were taken, and the throughput curves at    
+  shorter wavelengths were left undefined.  However, when using these   
+  filters for FUV imaging a substantial fraction of the detected counts 
+  come from < 1330 Angstroms and neglecting this part of the throughput 
+  curve substantially underestimates the true count rate for hot        
+  targets.  This update extrapolates the throughput curves for F25NDQ1  
+  and F25NDQ4 to shorter wavelengths.  The extrapolation for F25NDQ1    
+  was adjusted slightly to give improved agreement between the measured 
+  and predicted counts rates for the FUV-MAMA/F25NDQ1 imaging           
+  observation O5JA03Y5Q of the hot standard star HS2027+0651.           
+  revised_apt.fits renamed to l7a15022o_apt.fits on Jul 10 2001         
+  Oct-Nov 2000                                                          
+
+  New pseudo-apertures 52X0.05E1,52X0.1E1,52X0.2E1,52X0.5E1             
+  and 52X2E1 were included.                                             
+
+  rosy_apt.fits renamed to laf13369o_apt.fits on Oct 15 2001            
+  July 2003                                                             
+  A number of new spectroscopic pseudoapertures positions have          
+  been defined for STIS. These new positions are 52X0.2E2,              
+  52X0.5E2, 52X2E2, 52X0.05D1, 52X0.1D1, 52X0.2D1                       
+  52X0.5D1, 52X2D1, 25MAMAD1, F25QTZD1, and F25SRF2D1                   
+
+  The E2 positions are for use the the STIS-CCD and the G750L or        
+  G750M. The target is offset in the physical aperture so that it       
+  aligns with the 52X0.1 aperture that is used for point source         
+  fringe flats near row 900.                                            
+
+  The D1 aperture positions are for G140L and G140M observations        
+  of faint targets. They are positioned about 2" above the bottom       
+  of the detector to minimize the contribution of the FUV MAMA          
+  dark current. 52X0.05D1 and 52X0.1D1 can also be used for CCD         
+  peakups.                                                              
+  Rows for E2 apertures are based on the existing rows for the          
+  corresponding E1 apertures, except that the offset in the             
+  dispersion direction is chosen to align with the 52X0.1E1.            
+  Rows for D1 apertures are based on the corresponding regular          
+  apertures, except the background region is set to +/-30 pixels.       
+
+  Revised throughputs 31X0.05NDA,B, & C; October 03, 2013               
+
+UPDATED January 2014                                                    
+Throughput curves have been added for the 31X0.05NDA, 31X0.05NDB, and   
+31X0.05NDC apertures.  The data were derived using the upper envelope   
+of the throughputs implied by existing observations of reference stars  
+with well determined spectra that were observed using these apertures   
+prior to October 1, 2013.  OTA breathing can cause substantial          
+throughput variations for small apertures, and for bright object        
+screening it is necessary to adopt the highest realized throughput.     
+Data from the G140L, G140M, G230L, E140H, E140M, E230H, and E230M       
+gratings were considered, but in practice the upper envelope of the     
+throughput was set by G140L and G230L observations.                     
+
+For 31X0.05NDA and 31X0.05NDB, observations of GD153 from datasets      
+O3ZX080Z0 and O2ZX08H9Q taken on 1997-07-13 were the ones that most     
+constrained the adopted final adopted throughputs.                      
+
+For 31X0.05NDC the throughput was most constrained by observations of   
+HD51038 from datasets O64G07010 and O64G07020 taken on 2001-02-02.      
+
+The process was to choose flux references targets that have a good      
+estimate of flux as a function of wavelength.  The existing             
+observations of these targets were rereduced using X1D and the Aug 9,   
+2013 calibration data.  The existing pipeline throughput values were    
+scaled by the ratio of the rereduced flux to the standard star flux to  
+derive the implied aperture throughputs.                                
+
+new_stis_jan22_apt.fits renamed to y2r1559to_apt.fits on Feb 27 2014    
+
+
+
+ binary table extension                         
+ 8-bit bytes                                    
+ 2-dimensional binary table                     
+ width of table in bytes                        
+
+ size of special data area                      
+ one data group (required keyword)              
+
+
+ *** End of mandatory fields ***                                        
+
+
+ *** End of mandatory fields ***                                        
+
+
+ *** Column names ***                                                   
+
+
+ *** Column names ***                                                   
+
+ label for field   1                            
+
+ *** Column formats ***                                                 
+
+
+ *** Column formats ***                                                 
+
+ data format of field: ASCII Character          
+ label for field   2                            
+ data format of field: 2-byte INTEGER           
+ label for field   3                            
+ data format of field: 8-byte DOUBLE            
+ physical unit of field                         
+ label for field   4                            
+ data format of field: 4-byte REAL              
+ physical unit of field                         
+ label for field   5                            
+ data format of field: ASCII Character          
+ label for field   6                            
+ data format of field: ASCII Character          
+ display format                                 
+ display format                                 
+ undefined value for column                     
+ display format                                 
+ display format                                 
+ display format                                 
+ display format                                 
+
+
+
+
+ HDU checksum updated 2014-01-22T16:38:17       
+ data unit checksum updated 2014-01-21T15:24:01 
+File modified by user 'sholland' with fv  on 2014-01-21T10:24:03        
+File modified by user 'sholland' with fv  on 2014-01-21T10:25:31        
+File modified by user 'sholland' with fv  on 2014-01-22T11:37:24        
+
