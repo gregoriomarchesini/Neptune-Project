@@ -28,13 +28,8 @@ The following table describe the content of the folders which are presented in t
 ## Scripts content
  ----------------------
  
- 
 Each script is introduces by a description of its content an the capabilities of the script itself. It is useful that you read through the descriptions given in the header of the scripts in order to understand the output given. The code is extensively commented but the project is still in progress. So some parts maybe unclear and bigger changes can occur in the nexrt future.
 
- ## What should I exopect from the scripts 
- ----------------------
- 
- 
 The most of the scripts are able to produce display and analyse images from the Neptune observation campaign. The images are the obtained from one of the [MAMA](https://www.stsci.edu/itt/APT_help/STIS_Cycle21/c07_performance5.html) sensor (photon counter device)  installed on the HST. So the images are often expressed in terms of photon counts. It is aim of the projcet to convert the counts unit into flux unit introducing reasonable approximations and assumtions.
 
 
