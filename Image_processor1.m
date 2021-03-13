@@ -160,9 +160,6 @@ ylabel('pixel')
 title('StF_2 Filter')
 
 
-
-
-
 % Some comments on the 3D results:
 % from the 3D image of the stf2 filter it seems that i has way less counts
 % distributed on the image. Is this a sign that most of the lyght is in
@@ -171,18 +168,13 @@ title('StF_2 Filter')
 disp('Loading Finished ...') 
 
 
-
-
 %% Conversion Between Photon Count and Energy
 
 h_p=6.62607004e-34             % [m^3 kg s^-1] plank constant
 c=3e8;                         % [m s^-1]      speed of light
 A2m=10^-10;                    % Å to m conversion
-
 E_lyman=h_p*c/Lya_wavevlenght; % Energy of one photon in Lyman Alpha wavelengh [J]
-
 pow_lyman=E_lyman/1
-
 
 % %% Converted image
 % 

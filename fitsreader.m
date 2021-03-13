@@ -59,11 +59,11 @@ FITSDATASET.RAWCOUNTS    = fitsread(FITSDIR,'image',1);
 % Read specific parameters from header information
 fprintf('Dataset Description : %s \n',name)
 disp('--------------------------------------------------------')
-fprintf('Total exposure time : %s \n',s2h(FITSINFO.PrimaryData.Keywords{41,2}));         % Exposure time [s]
+fprintf('Total exposure time              : %s \n',s2h(FITSINFO.PrimaryData.Keywords{41,2}));         % Exposure time [s]
 %fprintf('%s\n',FITSINFO.PrimaryData.Keywords{37,2});                                    % date start exposure
 fprintf('Starting date of the observation : %s\n',FITSINFO.PrimaryData.Keywords{38,2});  % time start exposure
-fprintf('Filter Used : %s\n',FITSINFO.PrimaryData.Keywords{75,2});                   % Filter used in the observation
-fprintf('Sensor Sensitivity : %s\n',FITSINFO.PrimaryData.Keywords{41,2});
+fprintf('Filter Used                      : %s\n',FITSINFO.PrimaryData.Keywords{75,2});                   % Filter used in the observation
+fprintf('Sensor Sensitivity               : %s\n',FITSINFO.PrimaryData.Keywords{41,2});
 disp('--------------------------------------------------------')
 fprintf('\n\n\n\n')
 
@@ -78,7 +78,7 @@ flux_conv=photflam/exposure_time;
 %% Figure set up
 if strcmp(p.Results.plots_in,'yes')
     figure()
-    
+   
     set(gca,'ydir','nor')  % y-Achse soll von unten nach oben verlaufen
     s=imagesc( 1:1024,...
         1:1024,...
