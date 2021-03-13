@@ -277,13 +277,33 @@ legend
        %grafical objects
        rectangle.Position=[x_centre-l y_centre-l 2*rad(i) 2*rad(i)];
        rectangle.LineWidth=3;
-       pause(0.05)
-       
+   
        % once you fix the radious of the filter the matrix is of odd dimesions
        % we need to deine the number of elemnts that are at the left and right
        % of the center pixel in this matrix. This is the length of the matrix
        % divided by two and then apply the floor. In our case this is already
        % the direct floor of i  
+       
+       
+       
+       
+       % ONLY IF YOU NEED THE GIFT
+       
+%       filename   = 'Planet_gif.gif';  % create a new file (attention to not overwrite)    
+%       del        = 0.1;               % Time between animations frame 
+%       drawnow 
+%       frame      = getframe(conv_image);
+%       im         = frame2im(frame);
+%       [imind,cm] = rgb2ind(im,256);   % This creates a matrix of index and color map (cm)
+%       
+%       if i == 1;
+%         imwrite(imind,cm,filename,'gif','Loopcount',inf,'DelayTime',del);
+%       else
+%         imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',del);
+%       end
+%        
+       
+       
     
    end
 

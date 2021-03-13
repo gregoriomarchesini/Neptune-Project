@@ -277,7 +277,22 @@ legend
        %grafical objects
        rectangle.Position=[x_centre-l y_centre-l 2*rad(i) 2*rad(i)];
        rectangle.LineWidth=3;
-       pause(0.05)
+   
+       
+       
+      filename = 'Planet_gif.gif';
+      del = 0.1; % time between animation frames
+      drawnow 
+      frame = getframe();
+      im = frame2im(frame);
+      [imind,cm] = rgb2ind(im,256);
+      if ii == 1;
+        imwrite(imind,cm,filename,'gif','Loopcount',inf,'DelayTime',del);
+      else
+        imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',del);
+      end
+       
+       
        
        % once you fix the radious of the filter the matrix is of odd dimesions
        % we need to deine the number of elemnts that are at the left and right
