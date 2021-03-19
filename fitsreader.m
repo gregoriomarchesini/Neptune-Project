@@ -53,17 +53,27 @@ a=parse(p,varargin{:});
 
 % Read FITS-file:
 
-FITSINFO     = fitsinfo(FITSDIR);
+FITSINFO                 = fitsinfo(FITSDIR);
 FITSDATASET.RAWCOUNTS    = fitsread(FITSDIR,'image',1);
+
+[name_target,~] = KeyFinder(FITSINFO,'TARGNAME');
+[exptime,~]     = KeyFinder(FITSINFO,'TEXPTIME');
+[date_obs,~]    = KeyFinder(FITSINFO,'TDATEOBS');
+[Filter,~]      = KeyFinder(FITSINFO,'FILTER');
+[FOV,~]         = KeyFinder(FITSINFO,'APER_FOV');
+[pixel_arc,~]   = KeyFinder(FITSINFO,'PLATESC');
+
+
 
 % Read specific parameters from header information
 fprintf('Dataset Description : %s \n',name)
 disp('--------------------------------------------------------')
-fprintf('Total exposure time              : %s \n',s2h(FITSINFO.PrimaryData.Keywords{41,2}));         % Exposure time [s]
-%fprintf('%s\n',FITSINFO.PrimaryData.Keywords{37,2});                                    % date start exposure
-fprintf('Starting date of the observation : %s\n',FITSINFO.PrimaryData.Keywords{38,2});  % time start exposure
-fprintf('Filter Used                      : %s\n',FITSINFO.PrimaryData.Keywords{75,2});                   % Filter used in the observation
-fprintf('Sensor Sensitivity               : %s\n',FITSINFO.PrimaryData.Keywords{41,2});
+fprintf('Target Name                      : %s \n',name_target)
+fprintf('Total exposure time              : %s \n',s2h(exptime));         % Exposure time [s]
+fprintf('Starting date of the observation : %s\n',date_obs);  % time start exposure
+fprintf('Filter Used                      : %s\n',Filter);                   % Filter used in the observation
+fprintf('Filed Of View                    : %s\n',FOV)
+fprintf('pixel resolution                 : %s pixel/arcsec\n',pixel_arc)
 disp('--------------------------------------------------------')
 fprintf('\n\n\n\n')
 

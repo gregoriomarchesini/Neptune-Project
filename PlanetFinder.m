@@ -252,6 +252,11 @@ legend
    
    
    
+ % ONLY IF YOU NEED THE GIFT
+       
+%   filename   = 'Planet_gif.gif';  % create a new file (attention to not overwrite)    
+%   del        = 0.1;               % Time between animations frame 
+   
    
    for i=1:length(rad)
        
@@ -286,11 +291,9 @@ legend
        
        
        
-       
-       % ONLY IF YOU NEED THE GIFT
-       
-%       filename   = 'Planet_gif.gif';  % create a new file (attention to not overwrite)    
-%       del        = 0.1;               % Time between animations frame 
+          
+% ONLY IF YOU NEED THE GIFT
+      
 %       drawnow 
 %       frame      = getframe(conv_image);
 %       im         = frame2im(frame);
@@ -302,7 +305,7 @@ legend
 %         imwrite(imind,cm,filename,'gif','WriteMode','append','DelayTime',del);
 %       end
 %        
-       
+%        
        
     
    end

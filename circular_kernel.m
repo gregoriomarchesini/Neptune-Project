@@ -54,7 +54,7 @@ function M=circular_kernel(r1,r2,varargin);
 
 p=inputParser;
 validationFcn1 = @(x) isnumeric(x) && isscalar(x) && (x > 0) && (abs((floor(x)-x)) == 0.5 | abs(floor(x)-x) == 0)  ; 
-validationFcn2 = @(x) isnumeric(x) && isscalar(x) && (x > 0) && x<r1  && (abs((floor(x)-x)) == 0.5 | abs(floor(x)-x) == 0);
+validationFcn2 = @(x) isnumeric(x) && isscalar(x) && (x >= 0) && x<r1  && (abs((floor(x)-x)) == 0.5 | abs(floor(x)-x) == 0);
 addRequired(p,'r1',validationFcn1);
 addRequired(p,'r2',validationFcn2);
 addOptional(p,'stuff',0);
@@ -76,7 +76,9 @@ if floor(r1) ~= r1
 else
     
     M=zeros(2*r1+1);   % initialize the matrix
+    
     % center of the matrix;
+    
     x_center=r1+1;
     y_center=r1+1;
 end
@@ -86,12 +88,11 @@ end
 
 for i=1:row
     for j=1:col
-        
+
         if ((i-x_center)^2+(j-y_center)^2) < r1^2 && ((i-x_center)^2+(j-y_center)^2) >= r2^2
             M(i,j)=p.Results.rim;
             
         elseif ((i-x_center)^2+(j-y_center)^2) < r2^2 && p.Results.stuff ~= 0
-            
             M(i,j)=p.Results.stuff;
         end
     end

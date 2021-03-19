@@ -31,11 +31,11 @@ close all
 dir_list   = dir(fullfile(pwd,'HST'));                    % Find all files with the start name 'odq'
 target_dir = fullfile({dir_list.folder},{dir_list.name}); % The target files are insife dir_list in a structure.
                                                           % note that each FITS file has the same name of the                                                       
-                                                          % directory in which it is contained apart form teh estension                                                    % Using {} puts each field of the structure in a cell-arry
+                                                          % directory in which it is contained apart form teh estension           
 Observation_name = {dir_list.name}; 
 mask             = ~strncmp(Observation_name,'.',1);      % eliminates the first two useless files '..' ans '.' 
 Observation_name = Observation_name(mask);
-target_dir       = target_dir(mask);                      % The targetnames of the folder
+target_dir       = target_dir(mask);                      % The target names of the folder
 %% Open the images
 
 fprintf('Loading Files ...\n\n')
@@ -69,8 +69,6 @@ throughput_info = fitsinfo(path_useful);
 
 fprintf('Finished Loading Files ...\n')
 close all
-
-
 
 
 % Further Developments :
