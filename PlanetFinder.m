@@ -13,21 +13,27 @@ clc
 clf
 clear all
 
-%% Folders processing and Files Retrival 
+%% Folders processing and Files withdrowal 
 
-files1 = dir('filters');             % add Images Path 
-files2 = dir('HST');                 % add Images Path
+files1 = dir('filters');             % add Images Path (filters Specifications folder)
+files2 = dir('HST');                 % add Images Path ( HST images folder)
 
 % withdraw images from the files
+
 files_name = {files1(3:end).name};                               % The first name is the Strontium fluoride             
 addpath(files1(1).folder);                                       % the second is the clear MAMA sensor    
 addpath(files2(1).folder);                                       % the second is the clear MAMA sensor    
 
 %     INSERT THE IMAGE HERE 
 % –––––––––––––––––––––––––––––––
-image_neptune=fitsread('odq408rcq_flt.fits','image',1);          % image darectly from neptune gallery
+
+observation   = 'odq408raq_flt.fits';
+image_neptune = fitsread(observation,'image',1);                 % image darectly from neptune gallery
                                                                  % images  are contained inside HST folder
                                                                  % and you can decide which file to upload                                                                % 
+
+fitsreader(fullfile(files2(1).folder,observation),observation);                                                               
+                                                                 
 % Graphics definition
 
 real_image           = figure('Position',[0 0 600 400]);

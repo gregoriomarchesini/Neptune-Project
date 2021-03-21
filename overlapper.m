@@ -11,8 +11,6 @@ close all
 clc
 fprintf('Lading Images....\n')
 
-
-
 %% Folders processing and Files Retrival 
 
 files1 = dir('filters');             % add Images Path 
@@ -69,12 +67,16 @@ imagesc(HST2,image_neptune_stf2);
 
 % I will move the first figure over the second figure
 
-xstf2_centre    = 534;
-ystf2_centre    = 398;
+xstf2_centre    = 534;  %pixel
+ystf2_centre    = 398;  %pxeli
+radius_stf2     = 57 ;  %pixel
+
+
+
 
 xclear_centre     = 491;
 yclear_centre     = 380;
-
+radius_clear      = 50 ;
 
 horizontal_move  = xclear_centre-xstf2_centre ;     % movement needed to reovelap the images
 vertical_move    = yclear_centre-ystf2_centre ;     % movement needed to reoverlap the images
@@ -191,6 +193,66 @@ colorbar(cmp2);
 
 imagesc(cmp1,image_neptune_overlapped)
 imagesc(cmp2,image_neptune_clear+image_neptune_stf2);
+
+%% Planet Isoltaion Procedure
+
+% In order to isolate the planet I ise the minimum radious between the 
+% the two given.
+
+r_isolation=min(radius_stf2,radius_clear)
+
+image_neptune_clear_planet = image_neptune_clear(yclear_centre-r_isolation:yclear_centre+r_isolation,xclear_centre-r_isolation:xclear_centre+r_isolation); % 101x101 matrix
+image_neptune_stf2_planet  = image_neptune_stf2(ystf2_centre-r_isolation:ystf2_centre+r_isolation,xstf2_centre-r_isolation:xstf2_centre+r_isolation); % 101x101 matrix
+
+figure();
+subplot(121);
+imagesc(image_neptune_stf2_planet);
+title('isolated stf2')
+subplot(122);
+imagesc(image_neptune_clear_planet)
+title('isolated clear')
+
+%% Throughput Normalization 
+
+% The throughput associated with the two images is different and it is
+% obtained in the 'image_processing' script. Hereby the value found in the 
+% aforementioned script is used.
+
+scale_factor = 1.1875;   % clear_image throughput / stf2_image throughput
+
+image_difference=image_neptune_clear_planet-image_neptune_stf2_planet*scale_factor;
+% this one should contain only Lyman Alpha in theory
+
+figure();
+imagesc(image_difference);
+title('isolated stf2')
+colorbar
+
+% the image needs to be rescaled once again for the scale factor
+% since thisone was used to eliminate the 1600 Å component only
+
+image_difference=image_difference/scale_factor;
+
+%% Total counts estimation
+figure
+a=circular_kernel(r_isolation,0);
+imagesc(a)
+b=a.*image_difference;
+imagesc(b)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %%
 fprintf('Finished of the process....\nEnjoy \n')
 

@@ -75,10 +75,10 @@ if floor(r1) ~= r1
 % case of even number radious
 else
     
-    M=zeros(2*r1+1);   % initialize the matrix
+    M=zeros(2*r1+1);   % initialize the matrix (+1 for central pixel in case
+                       %                         the radious is integes)
     
     % center of the matrix;
-    
     x_center=r1+1;
     y_center=r1+1;
 end

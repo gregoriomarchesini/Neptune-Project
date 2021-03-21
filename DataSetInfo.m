@@ -36,6 +36,7 @@ Observation_name = {dir_list.name};
 mask             = ~strncmp(Observation_name,'.',1);      % eliminates the first two useless files '..' ans '.' 
 Observation_name = Observation_name(mask);
 target_dir       = target_dir(mask);                      % The target names of the folder
+
 %% Open the images
 
 fprintf('Loading Files ...\n\n')

@@ -96,11 +96,13 @@ title(sprintf(files_name{2}),'Interpreter', 'none')
 
 %% Parameters Identification
 
-%Through Put Ratio
+%Throughput Ratio
+
 scaling_factor=target_thp_Cl/target_thp_StF2;  % this is the normalization factor for
                                                % our image. This is because the
                                                % througputs are different for the two
-                                               % images that we are going to subtract
+                                               % images that must be
+                                               % subtracted
 
                                                
              
@@ -110,22 +112,23 @@ disp('Loading Requested Images ...')
 fits_info_stf2=fitsinfo('odq405acq_flt.fits');                     % info file
 filter_name_stf2=KeyFinder(fits_info_stf2,'FILTER');               % read the filter used
 filter_exptime_stf2=KeyFinder(fits_info_stf2,'TEXPTIME');          % read the exposure time [s]
-image_neptune_stf2=fitsread('odq405acq_flt.fits','image',1);    % image reading
+image_neptune_stf2=fitsread('odq405acq_flt.fits','image',1);       % image reading
 
 fits_info_clear=fitsinfo('odq405aeq_flt.fits');                    % info file
 filter_name_clear=KeyFinder(fits_info_clear,'FILTER');             % read the filter used
 filter_exptime_clear=KeyFinder(fits_info_clear,'TEXPTIME');        % read the exposure time [s]
-image_neptune_clear=fitsread('odq405aeq_flt.fits','image',1);   % image reading
+image_neptune_clear=fitsread('odq405aeq_flt.fits','image',1);      % image reading
 
 %% Throughput Normalization
 
+
 image_neptune_clear=image_neptune_clear*scaling_factor;  % This operation equates
-                                                  % the throughputs 
-                                                  % of the two images so
-                                                  % that the final result
-                                                  % takes into account for
-                                                  % the lower throughput of
-                                                  % the filtered image 
+                                                         % the throughputs 
+                                                         % of the two images so
+                                                         % that the final result
+                                                         % takes into account for
+                                                         % the lower throughput of
+                                                         % the filtered image 
 
 LYalpha_image=image_neptune_clear-image_neptune_stf2;
 % This image has (ideally) only lyman alpha radiation after the subtraction

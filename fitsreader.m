@@ -14,7 +14,7 @@ function [FITSINFO,FITSDATASET]=fitsreader(FITSDIR,name,varargin)
 %% DESCRIPTION
 %
 %  INPUT:   FITSDIR         directory of the observation
-%           name     Name fits-file.
+%           name            Name fits-file  (with (_option.fits)  inside).
 %  
 %  NOTES : the path must be correctly inserted in the function. The
 %          observation can be called by name. No extension is needed
@@ -70,8 +70,8 @@ fprintf('Dataset Description : %s \n',name)
 disp('--------------------------------------------------------')
 fprintf('Target Name                      : %s \n',name_target)
 fprintf('Total exposure time              : %s \n',s2h(exptime));         % Exposure time [s]
-fprintf('Starting date of the observation : %s\n',date_obs);  % time start exposure
-fprintf('Filter Used                      : %s\n',Filter);                   % Filter used in the observation
+fprintf('Starting date of the observation : %s\n',date_obs);              % time start exposure
+fprintf('Filter Used                      : %s\n',Filter);                % Filter used in the observation
 fprintf('Filed Of View                    : %s\n',FOV)
 fprintf('pixel resolution                 : %s pixel/arcsec\n',pixel_arc)
 disp('--------------------------------------------------------')
@@ -87,7 +87,7 @@ flux_conv=photflam/exposure_time;
 
 %% Figure set up
 if strcmp(p.Results.plots_in,'yes')
-    figure()
+    figure();
    
     set(gca,'ydir','nor')  % y-Achse soll von unten nach oben verlaufen
     s=imagesc( 1:1024,...
