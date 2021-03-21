@@ -85,13 +85,10 @@ end
 
 [row,col]=size(M);
 
-
 for i=1:row
     for j=1:col
-
-        if ((i-x_center)^2+(j-y_center)^2) < r1^2 && ((i-x_center)^2+(j-y_center)^2) >= r2^2
+        if ((i-x_center)^2+(j-y_center)^2) <= r1^2 && ((i-x_center)^2+(j-y_center)^2) >= r2^2
             M(i,j)=p.Results.rim;
-            
         elseif ((i-x_center)^2+(j-y_center)^2) < r2^2 && p.Results.stuff ~= 0
             M(i,j)=p.Results.stuff;
         end

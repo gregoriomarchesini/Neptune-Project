@@ -50,10 +50,14 @@ disp('-------------------------------')
 
 files_name={files1(3:end).name};   % The first name is the Strontium fluoride             
 addpath(files1(1).folder);         % the second is the clear MAMA sensor    
-addpath(files2(1).folder);         % the second is the clear MAMA sensor    
+addpath(files2(1).folder);         
 
 filter1=dlmread(files_name{1});
 filter2=dlmread(files_name{2});
+
+
+
+
 
 %% Plots for the Figure
 
@@ -93,6 +97,9 @@ xlabel('Wavelength (Å)')
 ylabel('Throughput (%)')
 title(sprintf(files_name{2}),'Interpreter', 'none')
 
+%% Throughput at 1216 (linear interpolation
+
+T_lambda = interp1q(x1,y1,Lya_wavevlenght);  % throughput at 1216 after interpolation
 
 %% Parameters Identification
 
@@ -144,20 +151,20 @@ title(sprintf('%s - %s',filter_name_clear,filter_name_stf2),'Interpreter','none'
 
 figure()
 
+subplot(133)
 mesh(LYalpha_image)
 xlabel('pixel')
 ylabel('pixel')
 title('Lyman_\alpha image')
 
-figure()
-
+subplot(131)
 mesh(image_neptune_clear)
 xlabel('pixel')
 ylabel('pixel')
 title('Clear Image')
 
-figure()
 
+subplot(132)
 mesh(image_neptune_stf2)
 xlabel('pixel')
 ylabel('pixel')
