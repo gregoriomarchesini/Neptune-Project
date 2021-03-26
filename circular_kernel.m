@@ -1,4 +1,4 @@
-function M=circular_kernel(r1,r2,varargin);
+function C=circular_kernel(r1,r2,varargin);
 
 % Developer: Gregorio Marchesini 
 % Date: 1 March 2021
@@ -16,8 +16,12 @@ function M=circular_kernel(r1,r2,varargin);
 %  Variable           Description                   Data Type
 %  ––––––––           –––––––––––                   –––––––––
 %
-%     r               radious of the circle         scalar
+%     r1              radious of the outer circle         scalar
 %                     in pixels
+%
+%     r2              radious of the inner circle         scalar
+%                     in pixels
+%
 %
 % ------------------------------------------------------------------------
 %
@@ -66,34 +70,52 @@ parse(p,r1,r2,varargin{:});
 
 % case of 0.5 radious
 if floor(r1) ~= r1
-    M=zeros(2*r1);     % initialize the matrix
- 
+    C=zeros(2*r1);
+    [X,Y]=meshgrid(1:2*r1);     % initialize the matrix
     % center of the matrix;
     x_center=floor(r1)+1;
     y_center=floor(r1)+1;
 
 % case of even number radious
 else
-    
-    M=zeros(2*r1+1);   % initialize the matrix (+1 for central pixel in case
-                       %                         the radious is integes)
-    
+    C=zeros(2*r1+1);
+    [X,Y]=meshgrid(1:2*r1+1);   % initialize the matrix (+1 for central pixel in case
+                             %                         the radious is integes)
     % center of the matrix;
     x_center=r1+1;
     y_center=r1+1;
 end
 
-[row,col]=size(M);
 
-for i=1:row
-    for j=1:col
-        if ((i-x_center)^2+(j-y_center)^2) <= r1^2 && ((i-x_center)^2+(j-y_center)^2) >= r2^2
-            M(i,j)=p.Results.rim;
-        elseif ((i-x_center)^2+(j-y_center)^2) < r2^2 && p.Results.stuff ~= 0
-            M(i,j)=p.Results.stuff;
-        end
-    end
+X=X-x_center;
+Y=Y-y_center;
+mod=(X.^2+Y.^2);
+if p.Results.rim ~= 0
+   C(mod<=r1^2 & mod>=r2^2)=p.Results.rim;
+else
+    C(mod<=r1^2 & mod>=r2^2)=1;
 end
+    
+
+if p.Results.stuff ~= 0
+  C(mod<r2^2)=p.Results.stuff;
+end
+
+
+
+
+end
+% [row,col]=size(M);
+% 
+% for i=1:row
+%     for j=1:col
+%         if ((i-x_center)^2+(j-y_center)^2) <= r1^2 && ((i-x_center)^2+(j-y_center)^2) >= r2^2
+%             M(i,j)=p.Results.rim;
+%         elseif ((i-x_center)^2+(j-y_center)^2) < r2^2 && p.Results.stuff ~= 0
+%             M(i,j)=p.Results.stuff;
+%         end
+%     end
+% end
 
 
     

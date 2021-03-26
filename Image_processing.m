@@ -77,7 +77,7 @@ string_format=sprintf('Throughput: \n %.3f',y1(x1==cal_wavelength));
 text(cal_wavelength+100,y1(x1==cal_wavelength)+0.005,string_format)
 grid on
 xlabel('Wavelength (Å)')
-ylabel('Throughput (%)')
+ylabel('Throughput')
 title(sprintf(files_name{1}),'Interpreter', 'none')
 
 % Strontium Fluoride Filter
@@ -94,7 +94,7 @@ string_format=sprintf('Throughput : \n %.3f',y2(x2==cal_wavelength));
 text(cal_wavelength+100,y2(x2==cal_wavelength)+0.005,string_format)
 grid on
 xlabel('Wavelength (Å)')
-ylabel('Throughput (%)')
+ylabel('Throughput ')
 title(sprintf(files_name{2}),'Interpreter', 'none')
 
 %% Throughput at 1216 (linear interpolation
@@ -116,20 +116,20 @@ scaling_factor=target_thp_Cl/target_thp_StF2;  % this is the normalization facto
 disp('Loading Requested Images ...')                                   
 %% FITS file reading
 
-fits_info_stf2=fitsinfo('odq405acq_flt.fits');                     % info file
-filter_name_stf2=KeyFinder(fits_info_stf2,'FILTER');               % read the filter used
-filter_exptime_stf2=KeyFinder(fits_info_stf2,'TEXPTIME');          % read the exposure time [s]
-image_neptune_stf2=fitsread('odq405acq_flt.fits','image',1);       % image reading
+fits_info_stf2      = fitsinfo('odq405acq_flt.fits');                     % info file
+filter_name_stf2    = KeyFinder(fits_info_stf2,'FILTER');               % read the filter used
+filter_exptime_stf2 = KeyFinder(fits_info_stf2,'TEXPTIME');          % read the exposure time [s]
+image_neptune_stf2  = fitsread('odq405acq_flt.fits','image',1);       % image reading
 
-fits_info_clear=fitsinfo('odq405aeq_flt.fits');                    % info file
-filter_name_clear=KeyFinder(fits_info_clear,'FILTER');             % read the filter used
-filter_exptime_clear=KeyFinder(fits_info_clear,'TEXPTIME');        % read the exposure time [s]
-image_neptune_clear=fitsread('odq405aeq_flt.fits','image',1);      % image reading
+fits_info_clear      = fitsinfo('odq405aeq_flt.fits');                    % info file
+filter_name_clear    = KeyFinder(fits_info_clear,'FILTER');             % read the filter used
+filter_exptime_clear = KeyFinder(fits_info_clear,'TEXPTIME');        % read the exposure time [s]
+image_neptune_clear  = fitsread('odq405aeq_flt.fits','image',1);      % image reading
 
 %% Throughput Normalization
 
 
-image_neptune_clear=image_neptune_clear*scaling_factor;  % This operation equates
+image_neptune_clear = image_neptune_clear*scaling_factor;  % This operation equates
                                                          % the throughputs 
                                                          % of the two images so
                                                          % that the final result
@@ -137,7 +137,7 @@ image_neptune_clear=image_neptune_clear*scaling_factor;  % This operation equate
                                                          % the lower throughput of
                                                          % the filtered image 
 
-LYalpha_image=image_neptune_clear-image_neptune_stf2;
+LYalpha_image = image_neptune_clear-image_neptune_stf2;
 % This image has (ideally) only lyman alpha radiation after the subtraction
 % The first image contains all the wavelengths. The second contains all the
 % wavelengths except for the Lyman Alpha.
@@ -178,19 +178,6 @@ title('StF_2 Filter')
 
 disp('Loading Finished ...') 
 
-
-%% Conversion Between Photon Count and Energy
-
-h_p       = 6.62607004e-34             % [m^3 kg s^-1] plank constant
-c         = 3e8;                       % [m s^-1]      speed of light
-A2m       = 10^-10;                    % Å to m conversion
-E_lyman   = h_p*c/Lya_wavevlenght;     % Energy of one photon in Lyman Alpha wavelengh [J]
-pow_lyman = E_lyman/1
-
-% %% Converted image
-% 
-% figure()
-% Lyman_energy=imagesc(LYalpha_image)*E_lyman;
 
 
   

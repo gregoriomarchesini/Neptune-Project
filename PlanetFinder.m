@@ -25,9 +25,21 @@ addpath(files1(1).folder);                                       % the second is
 addpath(files2(1).folder);                                       % the second is the clear MAMA sensor    
 
 %     INSERT THE IMAGE HERE 
-% –––––––––––––––––––––––––––––––
+% –––––––––––––––––––––––––––––––            % Check DataSetInfo for more
+%                                              information
+% -------------------------------
+% LIST OF FILES
+% -------------------------------
+% odq405acq_flt.fits
+% odq405aeq_flt.fits
+% odq406tuq_flt.fits
+% odq406twq_flt.fits
+% odq407a5q_flt.fits
+% odq408raq_flt.fits
+% odq408rcq_flt.fits
+% -------------------------------
 
-observation   = 'odq408raq_flt.fits';
+observation   = 'odq406twq_flt.fits';
 image_neptune = fitsread(observation,'image',1);                 % image darectly from neptune gallery
                                                                  % images  are contained inside HST folder
                                                                  % and you can decide which file to upload                                                                % 
@@ -271,7 +283,7 @@ legend
        % 1.5 2.5 3.5  are all radious of the filter
        % so the matrix is 3x3 5x5 7x7
 
-       disk_filter=circular_kernel(rad(i),rad(i)-2,'rim',200,'stuff',-400); % the circular kernel is weighted so to reduce it to a sort of Wavelet function
+       disk_filter        = circular_kernel(rad(i),rad(i)-2,'rim',200,'stuff',-400); % the circular kernel is weighted so to reduce it to a sort of Wavelet function
        l                  = floor(rad(i));            % this term serves to center the portion of the image which will be convoluted 
        Area               = pi*rad(i)^2;              % area inside the anlus
        mean_disk_value(i) = sum(sum(convoluted_neptune(x_centre-l:x_centre+l,y_centre-l:y_centre+l)...
