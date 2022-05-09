@@ -20,9 +20,9 @@ Here I mention all the resources I used to obtain my datas and the artcles which
 
 1.[Hubble Space Instrumentation Handbooks](https://www.stsci.edu/hst/documentation/handbook-archive)
 
-2.[IUE OBSERVATIONS OF NEPTUNE FOR H LYMAN-ALPHA EMISSION](file:///Users/gregorio/Desktop/stay%20foolish/Me&Neptune/material%20from%20prof/International_explor.pdf)
+2.[IUE OBSERVATIONS OF NEPTUNE FOR H LYMAN-ALPHA EMISSION](https://ntrs.nasa.gov/citations/19880057816)
 
-3.[Ultraviolet observations of Uranus and Neptune](file:///Users/gregorio/Desktop/stay%20foolish/Me&Neptune/material%20from%20prof/Ultraviolet_obs_review.pdf)
+3.[Ultraviolet observations of Uranus and Neptune](https://www.sciencedirect.com/science/article/pii/S0032063398001421)
 
 
 ## Co-Developers
