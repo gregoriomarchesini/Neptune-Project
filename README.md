@@ -32,7 +32,6 @@ Each script is introduces by a description of its content an the capabilities of
 
 The most of the scripts are able to produce display and analyse images from the Neptune observation campaign. The images are the obtained from one of the [MAMA](https://www.stsci.edu/itt/APT_help/STIS_Cycle21/c07_performance5.html) sensor (photon counter device)  installed on the HST. So the images are often expressed in terms of photon counts. It is aim of the projcet to convert the counts unit into flux unit introducing reasonable approximations and assumtions.
 
-
 ![Animation1](Images/Planet_gif.gif)
 
 ## Useful Resouces
