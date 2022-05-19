@@ -11,7 +11,6 @@ to distinguish between the radiation derived directly from the atmosphere of the
 
 ![Skectch](Images/sketch.png)
 
-![Animation1](Images/Planet_gif.gif)
 
 ## Useful Resouces
 ----------------------
